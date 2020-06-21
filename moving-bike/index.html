@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Moving Bike</title>
+</head>
+
+<body>
+  <canvas id="environment" width=1000 height=600 style="border: 1px solid black" />
+
+</body>
+
+<script>
+  var canvas = document.getElementById("environment");
+  var context = canvas.getContext("2d");
+
+  context.fillStyle = "#f4444a";
+
+  var bikeFrame = new Image();
+  bikeFrame.src = "./BikeFrame.gif";
+  var bikeTire = new Image();
+  bikeTire.src = "./BikeTire.gif";
+
+  var x = -300, y = 300, theta = 400;
+
+  bikeTire.onload = function() {
+    setInterval(animate, 33);
+  }
+
+  function animate() {
+    clearBackground();
+    if (x >= canvas.width + 300) {
+      x = -300;
+    }
+    x+=5;
+    theta+=0.04;
+
+    // terrain
+    context.fillStyle = "#75b5ff";
+    context.fillRect(0, 468, canvas.width, canvas.height - 468);
+
+    // front tire
+    context.save();
+    context.translate(x + 194, y + 75);
+    context.rotate(theta);
+    console.log(x);
+    context.drawImage(bikeTire, -bikeTire.width/2, -bikeTire.height/2);
+    context.restore();
+
+    // rear tire
+    context.save();
+    context.translate(x - 170, y + 77);
+    context.rotate(theta);
+    console.log(x);
+    context.drawImage(bikeTire, -bikeTire.width/2, -bikeTire.height/2);
+    context.restore();
+
+    // frame
+    context.save();
+    context.translate(x, y);
+    context.rotate(-.14)
+    context.drawImage(bikeFrame, -bikeFrame.width/2, -bikeFrame.height/2);
+    context.restore();
+  }
+
+  function clearBackground() {
+    context.fillStyle = "#f4444a";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }
+</script>
+
+</html>

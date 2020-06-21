@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <canvas id="drawingArea" width=300 height=300 style="border: 1px solid red"></canvas>
+
+  <script>
+    var canvas = document.getElementById("drawingArea");
+    var context = canvas.getContext("2d");
+
+    var x = 0, y = 0;
+
+    var img = new Image();
+    img.src = "BikeFrame.gif";
+    img.onload = function() {
+      setInterval(animate, 33); //calls animate() every 33ms
+    }
+
+
+    function animate() {
+      //do stuff in here to draw and animate
+      x++;
+      y++;
+      context.fillStyle = "blue";
+      context.fillRect(0, 0, canvas,width, canvas.height);
+      context.drawImage(img, x, y);
+    }
+  </script>
+</body>
+
+</html>

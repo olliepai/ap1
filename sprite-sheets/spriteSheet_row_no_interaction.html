@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<style>
+  canvas {
+    border: 2px solid red;
+    background-color: green;
+  }
+</style>
+
+<body>
+
+  <canvas width=400 height=400 id="myCanvas"></canvas>
+  <p id="demo"></p>
+
+  <script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    var spriteSheet = new Image();
+    spriteSheet.src = "https://cdn.codeandweb.com/blog/2016/05/10/how-to-create-a-sprite-sheet/spritestrip.png";
+
+
+    var numbImages = 6;
+    var currImage = 0;
+    var imageWidth = 255,
+      imageHeight = 300;
+
+
+    setInterval(animate, 60);
+
+    function animate() {
+      clearBackground();
+      drawSprite();
+    }
+
+    function clearBackground() {
+      ctx.fillStyle = "green";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawSprite() {
+      ctx.drawImage(spriteSheet, currImage * imageWidth, 0, imageWidth, imageHeight, 0, 0, imageWidth, imageHeight);
+      currImage++;
+      currImage %= numbImages;
+    }
+  </script>
+
+</body>
+
+</html>

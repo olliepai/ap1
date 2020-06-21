@@ -1,0 +1,11 @@
+body {
+  background-color: black;
+  font-family: monospace;
+  color: #00ccff;
+}
+
+button {
+  background-color: #707070;
+  border-width: 0px;
+  color: #00ccff;
+}

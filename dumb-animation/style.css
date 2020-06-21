@@ -1,0 +1,41 @@
+@keyframes awesomesauce {
+  0% {background-color: #80b3ff; width: 50px; height: 25px; top: 5px; left: 40px;}
+  25% {background-color:  #ff4d94; width: 500px; height: 400px; top: 40px; left: 50px;}
+  50% {background-color: #ffcc80; width: 200px; height: 900px; top: 80px; left: 42px;}
+  75% {background-color:  #ff4d94; width: 100px; height: 430px; top: 250px; left: 100px;}
+  100% {background-color: #80b3ff; width: 50px; height: 25px; top: 5px; left: 40px;}
+}
+
+#move {
+  border-radius: 5px;
+  position: relative;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  animation-name: awesomesauce;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes smallhands {
+  0% {top: 0px; left: 0px;}
+  10% {top: 80px; left: 250px;}
+  20% {top: 400px; left: 100px;}
+  30% {top: 650px; left: 20px;}
+  40% {top: 40px; left: 600px;}
+  50% {top: 200px; left: 0px;}
+  60% {top: 80px; left: 400px;}
+  70% {top: 500px; left: 20px;}
+  80% {top: 400px; left: 5px;}
+  90% {top: 400px; left: 490px;}
+  100% {top: 0px; left: 0px;}
+}
+
+#trumpy {
+  width: 250px;
+  height: 250px;
+  border-radius: 5px;
+  background-image: url("https://i.4pcdn.org/tv/1536124061750.gif");
+  position: relative;
+  animation-name: smallhands;
+  animation duration: 5s;
+  animation-iteration-count: infinite;
+}

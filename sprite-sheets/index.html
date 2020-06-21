@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <canvas width=800 height=600 id="canvas"></canvas>
+</body>
+
+<script>
+  var canvas = document.getElementById("canvas");
+  var context = canvas.getContext("2d");
+
+  document.addEventListener("keydown", processKeyDown);
+  document.addEventListener("keyup", processKeyUp);
+
+  var runner = new Runner();
+
+  setInterval(doStuff, 33);
+
+  function processKeyDown(event) {
+    if (event.key == 'a' && runner.direction != 1) {
+      runner.switchToLeft();
+    }
+    else if (event.key == 'd' && runner.direction != 2) {
+      runner.switchToRight();
+    }
+  }
+
+  function processKeyUp(event) {
+    if (event.key == 'a' && runner.direction == 1) {
+      runner.direction = 0;
+    }
+    else if (event.key == 'd' && runner.direction == 2) {
+      runner.direction = 0;
+    }
+  }
+
+  function clearBackground() {
+    context.fillStyle = "yellow";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function doStuff() {
+    clearBackground();
+    runner.move();
+    runner.draw();
+  }
+
+  function Runner() {
+    this.x = canvas.width / 2;
+    this.y = canvas.height / 2;
+
+    this.rightSprite = new Image();
+    this.rightSprite.src = "spritesheetCoolRunnerRight.png";
+    this.leftSprite = new Image();
+    this.leftSprite.src = "spritesheetCoolRunnerLeft.png";
+
+    this.totalImages = 6;
+    this.currentImagePos = 0;
+    this.subImageWidth = 120;
+    this.subImageHeight = 120;
+
+    this.currentSprite = this.leftSprite;
+
+    //0 is not moving, 1 is left, 2 is right
+    this.direction = 0;
+    this.speed = 5;
+
+    this.move = function() {
+      if (this.direction == 1) {
+        this.x -= this.speed;
+        this.currentImagePos++;
+      } else if (this.direction == 2) {
+        this.x += this.speed;
+        this.currentImagePos++;
+      } else {
+        this.currentImagePos = 0;
+      }
+      this.currentImagePos %= this.totalImages;
+    }
+
+    this.draw = function() {
+      context.drawImage(this.currentSprite,
+        this.currentImagePos * this.subImageWidth, 0,
+        this.subImageWidth, this.subImageHeight,
+        this.x, this.y,
+        this.subImageWidth/2, this.subImageHeight/2);
+    }
+
+    this.switchToLeft = function() {
+      this.direction = 1;
+      this.currentImagePos = 0;
+      this.currentSprite = runner.leftSprite;
+    }
+
+    this.switchToRight = function() {
+      this.direction = 2;
+      this.currentImagePos = 0;
+      this.currentSprite = runner.rightSprite;
+    }
+  }
+</script>
+
+</html>

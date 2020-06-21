@@ -1,0 +1,58 @@
+<canvas id="canvas" width=600 height=520>
+
+<script>
+  var canvas = document.getElementById("canvas");
+  var context = canvas.getContext("2d");
+
+  var tri = new RecursiveTriangle(0, canvas.height, canvas.width/2, 0, canvas.width, canvas.height, 5);
+
+  tri.draw();
+
+  function RecursiveTriangle(x1, y1, x2, y2, x3, y3, subLevels) {
+    this.x1 = x1;
+    this.y1 = y1;
+    this.x2 = x2;
+    this.y2 = y2;
+    this.x3 = x3;
+    this.y3 = y3;
+    this.subLevels = subLevels;
+
+    if (this.subLevels > 0) {
+      this.subTri1 = new RecursiveTriangle(this.x1, this.y1,
+        (this.x1 + this.x2)/2, (this.y1 + this.y2)/2,
+        (this.x1 + this.x3)/2, (this.y1 + this.y3)/2, this.subLevels - 1);
+
+      this.subTri2 = new RecursiveTriangle(this.x2, this.y2,
+        (this.x1 + this.x2)/2, (this.y1 + this.y2)/2,
+        (this.x2 + this.x3)/2, (this.y2 + this.y3)/2, this.subLevels - 1);
+
+      this.subTri3 = new RecursiveTriangle(this.x3, this.y3,
+        (this.x3 + this.x2)/2, (this.y3 + this.y2)/2,
+        (this.x1 + this.x3)/2, (this.y1 + this.y3)/2, this.subLevels - 1);
+    }
+
+    this.fillStyle = "red";
+    this.strokeStyle = "white";
+    this.lineWidth = 5;
+
+    this.draw = function() {
+      context.fillStyle = this.fillStyle;
+      context.strokeStyle = this.strokeStyle;
+      context.lineWidth = this.lineWidth;
+
+      context.beginPath();
+      context.moveTo(this.x1, this.y1);
+      context.lineTo(this.x2, this.y2);
+      context.lineTo(this.x3, this.y3);
+      context.closePath();
+      context.stroke();
+      context.fill();
+
+      if (this.subLevels > 0) {
+        this.subTri1.draw();
+        this.subTri2.draw();
+        this.subTri3.draw();
+      }
+    }
+  }
+</script>

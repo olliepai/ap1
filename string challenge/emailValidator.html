@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Email Validation Quick Challenge</title>
+</head>
+
+<body>
+
+	<h1>Email validator?</h1>
+
+	<h2>My Final Form!</h2>
+
+	<div>
+		Enter email address:<br>
+		<input type="text" name="email" id="email" onFocus="clearMessage()">
+		<button type="button" onClick="validateEmail()">Check Email</button>
+	</div>
+
+	<p id="validationMessage"></p>
+
+	<script>
+		function validateEmail() {
+			var email = document.getElementById("email").value;
+			var validated = true;
+
+			if (!findOneAt(email)) {
+				validated = false;
+				console.log("more than one @");
+			} else if (!verifyAtPosition(email)) {
+				validated = false;
+				console.log("missing chars before or after @");
+			} else if (!dotAfterAt(email)) {
+				validated = false;
+				console.log("missing dot after @");
+			} else if (!verifyDotPosition(email)) {
+				validated = false;
+				console.log("missing chars before or after dot");
+			}
+
+			if (validated) {
+				document.getElementById("validationMessage").innerHTML = "valid";
+			} else {
+				document.getElementById("validationMessage").innerHTML = "not quite as valid...try again";
+			}
+		}
+
+		function clearMessage() {
+			document.getElementById("email").value = "";
+			document.getElementById("validationMessage").innerHTML = "";
+		}
+
+		function findOneAt(email) {
+			var ok = true;
+
+			if (email.indexOf("@") == -1) {
+				ok = false;
+			} else if (email.substring(email.indexOf("@") + 1).indexOf("@") != -1) {
+				ok = false;
+			}
+
+			return ok;
+		}
+
+		function verifyAtPosition(email) {
+			var ok = true;
+
+			if (email.indexOf("@") == 0 || email.indexOf("@") == email.length - 1) {
+				ok = false;
+			}
+
+			return ok;
+		}
+
+		function dotAfterAt(email) {
+			var postAt = email.substring(email.indexOf("@") + 1);
+			var ok = true;
+
+			if (postAt.indexOf(".") == -1) {
+				ok = false;
+			}
+
+			return ok;
+		}
+
+		function verifyDotPosition(email) {
+			var postAt = email.substring(email.indexOf("@") + 1);
+			var ok = true;
+
+			if (postAt.lastIndexOf(".") == 0 || postAt.indexOf(".") == postAt.length - 1) {
+				ok = false;
+			}
+
+			return ok;
+		}
+	</script>
+
+	<!-- ALL OF THE WORK THAT YOU DO SHOULD BE ABOVE THIS COMMENT...
+			this isn't a requirement, just pointing out that the stuff below is
+			simply directions and that you will only need to interact with the
+			contents of this file from this point on.
+		-->
+
+	<h2>Directions</h2>
+
+	<p>
+		When the "Check Email" button is clicked, your code should check to
+		see if the text entered in the text area is in fact a validly
+		formatted email address (just the format...you aren't checking to
+		see if the email address is a real address). For our purposes, any
+		string formatted in the following fashion will be considered a valid
+		format (this is a simplified version of the actual standard):
+		<br>
+		<em style="margin-left:30px"><strong>blah@foo.meh</strong></em>
+	</p>
+
+	<p>
+		<dt><strong>blah</strong></dt>
+		<dd>one or more characters that do not contain an @ symbol</dd>
+		<br>
+		<dt><strong>@</strong></dt>
+		<dd>The email must contain one @ symbol only. To the left of the @,
+			there must be at least one character (the blah). To the right, there
+			must be at least three characters (a foo, followed by a ., followed
+			by a meh).</dd>
+		<br>
+		<dt><strong>foo</strong></dt>
+		<dd>one or more characters that do not contain an @ symbol</dd>
+		<br>
+		<dt><strong>.</strong></dt>
+		<dd>After the @ symbol, there must be a . symbol. The . symbol must
+			have at least one character on either side of it (ignoring the blah@ part).
+		</dd>
+		<br>
+		<dt><strong>meh</strong></dt>
+		<dd>one or more characters where neither an @ or . symbol are allowed</dd>
+	</p>
+
+	<p>
+		You should use the &lt;p&gt; tag near the top of this file (with an id of
+		"validationMessage") to report the results to the user. A valid format
+		should simply get a "valid" message while an invalid format should
+		get a "not quite as valid...try again" message. Notice that I have
+		created stub Javascript functions for you and hooked them up to the
+		relevant inputs (I even put a "clear" function that empties the text
+		field...which works in this case but would be awful in other cases).
+	</p>
+
+	<h2>Examples of invalid emails</h2>
+	<ul>
+		<li><strong>blah@boo@some.net</strong> has too many @s</li>
+		<li><strong>blah@boo</strong> has no . after the @</li>
+		<li><strong>blah@boo.</strong> has nothing after the .</li>
+		<li><strong>blah@.boo</strong> has nothing between the . and the @</li>
+
+	</ul>
+	<h2>This is a valid email!</h2>
+	<ul>
+		<li><strong>blah.boo@some.happy.bar</strong>
+		</li>
+	</ul>
+	<p>You can have many dots in the address as long as there is at least one dot after the @ and there is at least one character between the @ and the first post-@ dot and at least one character after the final dot.</li>
+	</p>
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>SQUARES</title>
+</head>
+
+<body>
+  <canvas width=800 height=600 id="canvas"></canvas>
+</body>
+
+<script>
+  var canvas = document.getElementById("canvas");
+  var context = canvas.getContext("2d");
+
+  var runner = new Runner();
+
+  function clearBackground() {
+    context.fillStyle = "yellow";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  runner.goRight();
+
+  function run() {
+    clearBackground();
+    runner.move();
+    runner.draw();
+  }
+
+  function Runner() {
+    this.x = 0;
+    this.y = 0;
+
+    this.rightSprite = new Image();
+    this.rightSprite.src = "spritesheetCoolRunnerRight.png";
+    this.downSprite = new Image();
+    this.downSprite.src = "spritesheetCoolRunnerDown.png";
+    this.leftSprite = new Image();
+    this.leftSprite.src = "spritesheetCoolRunnerLeft.png";
+    this.upSprite = new Image();
+    this.upSprite.src = "spritesheetCoolRunnerUp.png";
+
+    this.totalImages = 6;
+    this.currentImagePos = 0;
+    this.subImageWidth = 120;
+    this.subImageHeight = 120;
+
+    this.currentSprite = this.leftSprite;
+
+    //0 is not moving, 1 is right, 2 is down, 3 is left, 4 is up
+    this.currentState;
+    this.TOP = 1;
+    this.RIGHT = 2;
+    this.BOTTOM = 3;
+    this.LEFT = 4;
+    this.currentState = this.TOP;
+
+    this.speed = 5;
+
+    this.move = function() {
+      if (this.currentState == this.TOP) {
+        this.x += this.speed;
+        this.currentImagePos++;
+
+        if (this.x + this.subImageWidth/2 >= 800) {
+          this.goDown();
+          this.currentState = this.RIGHT;
+        }
+      } else if (this.currentState == this.RIGHT) {
+        this.y += this.speed;
+        this.currentImagePos++;
+
+        if (this.y + this.subImageHeight/2 >= 600) {
+          this.goLeft();
+          this.currentState = this.BOTTOM;
+        }
+      } else if (this.currentState == this.BOTTOM) {
+        this.x -= this.speed;
+        this.currentImagePos++;
+
+        if (this.x <= 0) {
+          this.goUp();
+          this.currentState = this.LEFT;
+        }
+      } else if (this.currentState == this.LEFT) {
+        this.y -= this.speed;
+        this.currentImagePos++;
+
+        if (this.y <= 0) {
+          this.goRight();
+          this.currentState = this.TOP;
+        }
+      }
+      this.currentImagePos %= this.totalImages;
+    }
+
+    this.goRight = function() {
+      this.direction = 1;
+      this.currentImagePos = 0;
+      this.currentSprite = runner.rightSprite;
+    }
+
+    this.goDown = function() {
+      this.direction = 2;
+      this.currentImagePos = 0;
+      this.currentSprite = runner.downSprite;
+    }
+
+    this.goLeft = function() {
+      this.direction = 3;
+      this.currentImagePos = 0;
+      this.currentSprite = runner.leftSprite;
+    }
+
+    this.goUp = function() {
+      this.direction = 4;
+      this.currentImagePos = 0;
+      this.currentSprite = runner.upSprite;
+    }
+
+    this.draw = function() {
+      if (this.currentState == this.TOP || this.currentState == this.BOTTOM) {
+        context.drawImage(this.currentSprite,
+          this.currentImagePos * this.subImageWidth, 0,
+          this.subImageWidth, this.subImageHeight,
+          this.x, this.y,
+          this.subImageWidth/2, this.subImageHeight/2);
+      }
+
+      if (this.currentState == this.LEFT || this.currentState == this.RIGHT) {
+        context.drawImage(this.currentSprite,
+          0, this.currentImagePos * this.subImageHeight,
+          this.subImageWidth, this.subImageHeight,
+          this.x, this.y,
+          this.subImageWidth/2, this.subImageHeight/2);
+      }
+    }
+  }
+
+  setInterval(run, 33);
+</script>
+
+</html>

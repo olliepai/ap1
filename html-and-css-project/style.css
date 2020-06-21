@@ -1,0 +1,63 @@
+body {
+  margin: 0px;
+}
+
+h1, h2, p {
+  margin: 10px;
+}
+
+#main-header {
+  text-align: center;
+  color: red;
+}
+
+#koala-image {
+  width: 400px;
+  height: 400px;
+  float: left;
+  margin: 10px;
+}
+
+#underneath-img {
+  clear: both;
+}
+
+#sub-heading {
+  color: blue;
+}
+
+ol {
+  list-style-type: lower-alpha;
+}
+
+#left-column {
+  box-sizing: border-box;
+  border: 3px solid blue;
+  background-color: green;
+  padding: 10px 20px;
+  margin: 0px;
+  width: 50%;
+  float: left;
+  height: 200px;
+  overflow: auto;
+}
+
+#right-column {
+  box-sizing: border-box;
+  border: 3px solid red;
+  background-color: orange;
+  padding: 10px 20px;
+  margin: 0px;
+  width: 50%;
+  float: left;
+  height: 200px;
+  overflow: auto;
+}
+
+#columns a:link, #columns a:visited {
+  color: red;
+}
+
+.highlight {
+  background-color: yellow;
+}
